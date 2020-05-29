@@ -2,11 +2,26 @@
 
 /**
  * @package   Building
- * @copyright 2014-2016 silverorange
+ * @copyright 2014-2020 silverorange
  * @license   http://www.opensource.org/licenses/mit-license.html MIT License
  */
 abstract class BuildingBlockOrder extends AdminOrder
 {
+	// init phase
+	// {{{ protected function initInternal()
+
+	protected function initInternal()
+	{
+		parent::initInternal();
+
+		// auto ordering doesn't make sense for blocks
+		$options_list = $this->ui->getWidget('options');
+		$options_list->parent->visible = false;
+		$options_list->value = 'custom';
+	}
+
+	// }}}
+
 	// process phase
 	// {{{ protected function saveIndex()
 
@@ -46,11 +61,6 @@ abstract class BuildingBlockOrder extends AdminOrder
 			$view->display($block);
 			$order_widget->addOption($block->id, ob_get_clean(), 'text/xml');
 		}
-
-		// auto ordering doesn't make sense for blocks
-		$options_list = $this->ui->getWidget('options');
-		$options_list->parent->visible = false;
-		$options_list->value = 'custom';
 	}
 
 	// }}}
