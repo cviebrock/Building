@@ -2,7 +2,7 @@
 
 /**
  * @package   Building
- * @copyright 2014-2019 silverorange
+ * @copyright 2014-2020 silverorange
  * @license   http://www.opensource.org/licenses/mit-license.html MIT License
  */
 abstract class BuildingBlockOrder extends AdminOrder
