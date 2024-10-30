@@ -7,7 +7,7 @@
  * @todo      This view still needs to be implemented. Leaving the
  *            implementation incomplete until we actually need to use it.
  */
-class BuildingBlockAudioView extends BuildingBlockMediaView
+class BuildingBlockAudioView extends BuildingBlockView
 {
 	// {{{ protected function displayContent()
 
