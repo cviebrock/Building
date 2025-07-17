@@ -1,72 +1,69 @@
 <?php
 
 /**
- * Base object for CMS
+ * Base object for CMS.
  *
- * @package   Building
  * @copyright 2014-2016 silverorange
  * @license   http://www.opensource.org/licenses/mit-license.html MIT License
  */
 class BuildingBlock extends SwatDBDataObject
 {
-	// {{{ public properties
 
-	/**
-	 * @var integer
-	 */
-	public $id;
 
-	/**
-	 * @var string
-	 */
-	public $bodytext;
+    /**
+     * @var int
+     */
+    public $id;
 
-	/**
-	 * @var integer
-	 */
-	public $displayorder;
+    /**
+     * @var string
+     */
+    public $bodytext;
 
-	/**
-	 * @var SwatDate
-	 */
-	public $createdate;
+    /**
+     * @var int
+     */
+    public $displayorder;
 
-	/**
-	 * @var SwatDate
-	 */
-	public $modified_date;
+    /**
+     * @var SwatDate
+     */
+    public $createdate;
 
-	// }}}
-	// {{{ protected function init()
+    /**
+     * @var SwatDate
+     */
+    public $modified_date;
 
-	protected function init()
-	{
-		parent::init();
 
-		$this->table = 'Block';
 
-		$this->registerDateProperty('createdate');
-		$this->registerDateProperty('modified_date');
 
-		$this->registerInternalProperty(
-			'attachment',
-			SwatDBClassMap::get('SiteAttachment')
-		);
+    protected function init()
+    {
+        parent::init();
 
-		$this->registerInternalProperty(
-			'image',
-			SwatDBClassMap::get('SiteImage')
-		);
+        $this->table = 'Block';
 
-		$this->registerInternalProperty(
-			'media',
-			SwatDBClassMap::get('SiteVideoMedia')
-		);
+        $this->registerDateProperty('createdate');
+        $this->registerDateProperty('modified_date');
 
-		$this->id_field = 'integer:id';
-	}
+        $this->registerInternalProperty(
+            'attachment',
+            SwatDBClassMap::get('SiteAttachment')
+        );
 
-	// }}}
+        $this->registerInternalProperty(
+            'image',
+            SwatDBClassMap::get('SiteImage')
+        );
+
+        $this->registerInternalProperty(
+            'media',
+            SwatDBClassMap::get('SiteVideoMedia')
+        );
+
+        $this->id_field = 'integer:id';
+    }
+
+
 }
-
-?>
