@@ -6,8 +6,6 @@
  */
 class BuildingBlockXHTMLView extends BuildingBlockView
 {
-
-
     /**
      * @var int
      *
@@ -15,32 +13,20 @@ class BuildingBlockXHTMLView extends BuildingBlockView
      */
     protected $body_summary_length = 100;
 
-
-
-
     public function setBodySummaryLength($length)
     {
         $this->body_summary_length = (int) $length;
     }
-
-
-
 
     protected function define()
     {
         $this->definePart('body');
     }
 
-
-
-
     protected function displayContent(BuildingBlock $block)
     {
         $this->displayBody($block);
     }
-
-
-
 
     protected function displayBody(BuildingBlock $block)
     {
@@ -63,9 +49,6 @@ class BuildingBlockXHTMLView extends BuildingBlockView
         }
     }
 
-
-
-
     protected function getCSSClassNames()
     {
         return array_merge(
@@ -73,6 +56,4 @@ class BuildingBlockXHTMLView extends BuildingBlockView
             ['building-block-xhtml-view']
         );
     }
-
-
 }

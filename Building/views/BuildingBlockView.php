@@ -6,8 +6,6 @@
  */
 abstract class BuildingBlockView extends SiteView
 {
-
-
     /**
      * @var array
      *
@@ -15,9 +13,6 @@ abstract class BuildingBlockView extends SiteView
      * @see BuildingBlockView::removeCSSClassName()
      */
     protected $css_classes = [];
-
-
-
 
     public function display($block)
     {
@@ -40,16 +35,10 @@ abstract class BuildingBlockView extends SiteView
         $container->close();
     }
 
-
-
-
     public function setCSSClassNames(array $class_names)
     {
         $this->css_classes = array_unique($class_names);
     }
-
-
-
 
     public function addCSSClassName($class_name)
     {
@@ -61,9 +50,6 @@ abstract class BuildingBlockView extends SiteView
         );
     }
 
-
-
-
     public function removeCSSClassName($class_name)
     {
         $this->css_classes = array_diff(
@@ -72,13 +58,7 @@ abstract class BuildingBlockView extends SiteView
         );
     }
 
-
-
-
     abstract protected function displayContent(BuildingBlock $block);
-
-
-
 
     protected function getCSSClassNames()
     {
@@ -89,6 +69,4 @@ abstract class BuildingBlockView extends SiteView
             )
         );
     }
-
-
 }

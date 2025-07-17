@@ -8,8 +8,6 @@
  */
 class BuildingBlock extends SwatDBDataObject
 {
-
-
     /**
      * @var int
      */
@@ -34,9 +32,6 @@ class BuildingBlock extends SwatDBDataObject
      * @var SwatDate
      */
     public $modified_date;
-
-
-
 
     protected function init()
     {
@@ -64,6 +59,4 @@ class BuildingBlock extends SwatDBDataObject
 
         $this->id_field = 'integer:id';
     }
-
-
 }

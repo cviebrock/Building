@@ -6,23 +6,15 @@
  */
 class BuildingBlockImageView extends BuildingBlockView
 {
-
-
     /**
      * @var string
      */
     protected $image_dimension_shortname = 'original';
 
-
-
-
     public function setImageDimensionShortname($shortname)
     {
         $this->image_dimension_shortname = $shortname;
     }
-
-
-
 
     protected function define()
     {
@@ -30,9 +22,6 @@ class BuildingBlockImageView extends BuildingBlockView
         $this->definePart('title');
         $this->definePart('description');
     }
-
-
-
 
     protected function displayContent(BuildingBlock $block)
     {
@@ -48,9 +37,6 @@ class BuildingBlockImageView extends BuildingBlockView
         $this->displayImage($block);
         $this->displayDetails($block);
     }
-
-
-
 
     protected function displayDetails(BuildingBlock $block)
     {
@@ -83,9 +69,6 @@ class BuildingBlockImageView extends BuildingBlockView
         }
     }
 
-
-
-
     protected function displayImage(BuildingBlock $block)
     {
         if ($this->getMode('image') > SiteView::MODE_NONE) {
@@ -95,9 +78,6 @@ class BuildingBlockImageView extends BuildingBlockView
             $img->display();
         }
     }
-
-
-
 
     protected function displayTitle(BuildingBlock $block)
     {
@@ -110,9 +90,6 @@ class BuildingBlockImageView extends BuildingBlockView
         }
     }
 
-
-
-
     protected function displayDescription(BuildingBlock $block)
     {
         if ($this->getMode('description') > SiteView::MODE_NONE
@@ -124,9 +101,6 @@ class BuildingBlockImageView extends BuildingBlockView
         }
     }
 
-
-
-
     protected function getCSSClassNames()
     {
         return array_merge(
@@ -134,6 +108,4 @@ class BuildingBlockImageView extends BuildingBlockView
             ['building-block-image-view']
         );
     }
-
-
 }

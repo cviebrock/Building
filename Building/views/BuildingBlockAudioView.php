@@ -9,8 +9,6 @@
  */
 class BuildingBlockAudioView extends BuildingBlockView
 {
-
-
     protected function displayContent(BuildingBlock $block)
     {
         if (!$block->media instanceof SiteAudioMedia) {
@@ -22,6 +20,4 @@ class BuildingBlockAudioView extends BuildingBlockView
             );
         }
     }
-
-
 }

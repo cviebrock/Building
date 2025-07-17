@@ -8,7 +8,6 @@ abstract class BuildingBlockOrder extends AdminOrder
 {
     // init phase
 
-
     protected function initInternal()
     {
         parent::initInternal();
@@ -19,10 +18,7 @@ abstract class BuildingBlockOrder extends AdminOrder
         $options_list->value = 'custom';
     }
 
-
-
     // process phase
-
 
     protected function saveIndex($id, $index)
     {
@@ -36,15 +32,9 @@ abstract class BuildingBlockOrder extends AdminOrder
         );
     }
 
-
-
     // build phase
 
-
     abstract protected function getBlocks();
-
-
-
 
     protected function loadData()
     {
@@ -61,9 +51,6 @@ abstract class BuildingBlockOrder extends AdminOrder
             $order_widget->addOption($block->id, ob_get_clean(), 'text/xml');
         }
     }
-
-
-
 
     protected function getView()
     {
@@ -84,10 +71,7 @@ abstract class BuildingBlockOrder extends AdminOrder
         return $view;
     }
 
-
-
     // finalize phase
-
 
     public function finalize()
     {
@@ -96,6 +80,4 @@ abstract class BuildingBlockOrder extends AdminOrder
             'packages/building/admin/styles/building-block-order.css'
         );
     }
-
-
 }

@@ -6,17 +6,12 @@
  */
 class BuildingBlockVideoView extends BuildingBlockView
 {
-
-
     protected function define()
     {
         $this->definePart('video');
         $this->definePart('title');
         $this->definePart('description');
     }
-
-
-
 
     protected function displayContent(BuildingBlock $block)
     {
@@ -32,9 +27,6 @@ class BuildingBlockVideoView extends BuildingBlockView
         $this->displayVideo($block);
         $this->displayDetails($block);
     }
-
-
-
 
     protected function displayDetails(BuildingBlock $block)
     {
@@ -67,9 +59,6 @@ class BuildingBlockVideoView extends BuildingBlockView
         }
     }
 
-
-
-
     protected function displayVideo(BuildingBlock $block)
     {
         if ($this->getMode('video') > SiteView::MODE_NONE) {
@@ -82,9 +71,6 @@ class BuildingBlockVideoView extends BuildingBlockView
         }
     }
 
-
-
-
     protected function displayTitle(BuildingBlock $block)
     {
         $title = $block->media->getTitle();
@@ -95,9 +81,6 @@ class BuildingBlockVideoView extends BuildingBlockView
             $span->display();
         }
     }
-
-
-
 
     protected function displayDescription(BuildingBlock $block)
     {
@@ -110,9 +93,6 @@ class BuildingBlockVideoView extends BuildingBlockView
         }
     }
 
-
-
-
     protected function getCSSClassNames()
     {
         return array_merge(
@@ -120,6 +100,4 @@ class BuildingBlockVideoView extends BuildingBlockView
             ['building-block-video-view']
         );
     }
-
-
 }

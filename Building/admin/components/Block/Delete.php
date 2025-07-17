@@ -8,7 +8,6 @@ class BuildingBlockDelete extends AdminDBDelete
 {
     // process phase
 
-
     protected function processDBData(): void
     {
         parent::processDBData();
@@ -26,10 +25,7 @@ class BuildingBlockDelete extends AdminDBDelete
         }
     }
 
-
-
     // build phase
-
 
     protected function buildInternal()
     {
@@ -62,6 +58,4 @@ class BuildingBlockDelete extends AdminDBDelete
         $message->content = ob_get_clean();
         $message->content_type = 'text/xml';
     }
-
-
 }

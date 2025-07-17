@@ -6,8 +6,6 @@
  */
 class BuildingBlockAttachmentView extends BuildingBlockView
 {
-
-
     protected function define()
     {
         $this->definePart('content'); // used to set link that wraps content
@@ -16,9 +14,6 @@ class BuildingBlockAttachmentView extends BuildingBlockView
         $this->definePart('filesize');
         $this->definePart('mime-type');
     }
-
-
-
 
     protected function displayContent(BuildingBlock $block)
     {
@@ -65,9 +60,6 @@ class BuildingBlockAttachmentView extends BuildingBlockView
         $wrapper->close();
     }
 
-
-
-
     protected function displayDetails(BuildingBlock $block)
     {
         $parts = [];
@@ -94,9 +86,6 @@ class BuildingBlockAttachmentView extends BuildingBlockView
         }
     }
 
-
-
-
     protected function displayIcon(BuildingBlock $block)
     {
         if ($this->getMode('icon') > SiteView::MODE_NONE) {
@@ -119,9 +108,6 @@ class BuildingBlockAttachmentView extends BuildingBlockView
         }
     }
 
-
-
-
     protected function displayTitle(BuildingBlock $block)
     {
         if ($this->getMode('title') > SiteView::MODE_NONE) {
@@ -137,9 +123,6 @@ class BuildingBlockAttachmentView extends BuildingBlockView
         }
     }
 
-
-
-
     protected function displayMimeType(BuildingBlock $block)
     {
         if ($this->getMode('mime-type') > SiteView::MODE_NONE) {
@@ -149,9 +132,6 @@ class BuildingBlockAttachmentView extends BuildingBlockView
             $span->display();
         }
     }
-
-
-
 
     protected function displayFilesize(BuildingBlock $block)
     {
@@ -163,9 +143,6 @@ class BuildingBlockAttachmentView extends BuildingBlockView
         }
     }
 
-
-
-
     protected function getCSSClassNames()
     {
         return array_merge(
@@ -173,6 +150,4 @@ class BuildingBlockAttachmentView extends BuildingBlockView
             ['building-block-attachment-view']
         );
     }
-
-
 }

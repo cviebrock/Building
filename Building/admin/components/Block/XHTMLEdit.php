@@ -6,25 +6,17 @@
  */
 class BuildingBlockXHTMLEdit extends BuildingBlockEdit
 {
-
-
     protected function getUiXml()
     {
         return __DIR__ . '/xhtml-edit.xml';
     }
-
-
-
 
     protected function getObjectUiValueNames()
     {
         return ['bodytext'];
     }
 
-
-
     // build phase
-
 
     protected function buildNavBar()
     {
@@ -38,6 +30,4 @@ class BuildingBlockXHTMLEdit extends BuildingBlockEdit
             $this->navbar->createEntry(Building::_('Edit Text Content'));
         }
     }
-
-
 }

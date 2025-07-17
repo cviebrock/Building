@@ -6,31 +6,20 @@
  */
 class BuildingBlockAttachmentEdit extends BuildingBlockEdit
 {
-
-
     /**
      * @var SiteAttachmentSet
      */
     protected $attachment_set;
-
-
-
 
     protected function getUiXml()
     {
         return __DIR__ . '/attachment-edit.xml';
     }
 
-
-
-
     protected function getAttachmentSetShortname()
     {
         return 'block';
     }
-
-
-
 
     protected function getAttachmentSet()
     {
@@ -57,9 +46,6 @@ class BuildingBlockAttachmentEdit extends BuildingBlockEdit
         return $this->attachment_set;
     }
 
-
-
-
     protected function getNewAttachmentInstance()
     {
         $class_name = SwatDBClassMap::get('SiteAttachment');
@@ -70,10 +56,7 @@ class BuildingBlockAttachmentEdit extends BuildingBlockEdit
         return $attachment;
     }
 
-
-
     // init phase
-
 
     protected function initInternal()
     {
@@ -83,9 +66,6 @@ class BuildingBlockAttachmentEdit extends BuildingBlockEdit
             $this->ui->getWidget('file_upload')->required = true;
         }
     }
-
-
-
 
     protected function initObject()
     {
@@ -99,10 +79,7 @@ class BuildingBlockAttachmentEdit extends BuildingBlockEdit
         }
     }
 
-
-
     // process phase
-
 
     protected function updateObject()
     {
@@ -119,9 +96,6 @@ class BuildingBlockAttachmentEdit extends BuildingBlockEdit
             );
         }
     }
-
-
-
 
     protected function processAttachment()
     {
@@ -157,9 +131,6 @@ class BuildingBlockAttachmentEdit extends BuildingBlockEdit
         }
     }
 
-
-
-
     protected function saveObject()
     {
         parent::saveObject();
@@ -169,18 +140,12 @@ class BuildingBlockAttachmentEdit extends BuildingBlockEdit
         }
     }
 
-
-
-
     protected function getFileBase()
     {
         return '../attachments';
     }
 
-
-
     // build phase
-
 
     protected function loadObject()
     {
@@ -198,9 +163,6 @@ class BuildingBlockAttachmentEdit extends BuildingBlockEdit
         }
     }
 
-
-
-
     protected function buildNavBar()
     {
         parent::buildNavBar();
@@ -213,6 +175,4 @@ class BuildingBlockAttachmentEdit extends BuildingBlockEdit
             $this->navbar->createEntry(Building::_('Edit File Content'));
         }
     }
-
-
 }

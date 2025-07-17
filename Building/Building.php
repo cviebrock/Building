@@ -8,8 +8,6 @@
  */
 class Building
 {
-
-
     /**
      * The gettext domain for building.
      *
@@ -17,18 +15,12 @@ class Building
      */
     public const GETTEXT_DOMAIN = 'building';
 
-
-
-
     /**
      * Whether or not this package is initialized.
      *
      * @var bool
      */
     private static $is_initialized = false;
-
-
-
 
     /**
      * Translates a phrase.
@@ -44,9 +36,6 @@ class Building
         return self::gettext($message);
     }
 
-
-
-
     /**
      * Translates a phrase.
      *
@@ -61,9 +50,6 @@ class Building
     {
         return dgettext(self::GETTEXT_DOMAIN, $message);
     }
-
-
-
 
     /**
      * Translates a plural phrase.
@@ -95,17 +81,11 @@ class Building
         );
     }
 
-
-
-
     public static function setupGettext()
     {
         bindtextdomain(self::GETTEXT_DOMAIN, __DIR__ . '/../locale');
         bind_textdomain_codeset(self::GETTEXT_DOMAIN, 'UTF-8');
     }
-
-
-
 
     public static function init()
     {
@@ -154,15 +134,10 @@ class Building
         self::$is_initialized = true;
     }
 
-
-
-
     /**
      * Don't allow instantiation of the Building object.
      *
      * This class contains only static methods and should not be instantiated.
      */
     private function __construct() {}
-
-
 }

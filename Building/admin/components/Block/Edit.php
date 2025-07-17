@@ -6,22 +6,15 @@
  */
 abstract class BuildingBlockEdit extends AdminObjectEdit
 {
-
-
     protected function getObjectClass()
     {
         return 'BuildingBlock';
     }
 
-
-
     // process phase
-
 
     protected function getSavedMessagePrimaryContent()
     {
         return Building::_('Content has been saved.');
     }
-
-
 }

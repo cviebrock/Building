@@ -8,8 +8,6 @@
  */
 class BuildingBlockViewFactory
 {
-
-
     /**
      * @param SiteApplication $app   the application in which to get the view
      * @param BuildingBlock   $block the block for which to get the view. The
@@ -28,9 +26,6 @@ class BuildingBlockViewFactory
     ) {
         return SiteViewFactory::get($app, self::getViewType($block));
     }
-
-
-
 
     /**
      * Gets the view type for a block.
@@ -55,6 +50,4 @@ class BuildingBlockViewFactory
 
         return $type;
     }
-
-
 }

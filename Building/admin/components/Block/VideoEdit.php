@@ -6,23 +6,15 @@
  */
 class BuildingBlockVideoEdit extends BuildingBlockEdit
 {
-
-
     /**
      * @var SiteVideoMedia
      */
     protected $media;
 
-
-
-
     protected function getUiXml()
     {
         return __DIR__ . '/video-edit.xml';
     }
-
-
-
 
     protected function getMedia()
     {
@@ -53,10 +45,7 @@ class BuildingBlockVideoEdit extends BuildingBlockEdit
         return $this->media;
     }
 
-
-
     // init phase
-
 
     protected function initObject()
     {
@@ -70,10 +59,7 @@ class BuildingBlockVideoEdit extends BuildingBlockEdit
         }
     }
 
-
-
     // process phase
-
 
     protected function updateObject()
     {
@@ -91,9 +77,6 @@ class BuildingBlockVideoEdit extends BuildingBlockEdit
         );
     }
 
-
-
-
     protected function saveObject()
     {
         parent::saveObject();
@@ -101,10 +84,7 @@ class BuildingBlockVideoEdit extends BuildingBlockEdit
         $this->getObject()->media->save();
     }
 
-
-
     // build phase
-
 
     protected function buildInternal()
     {
@@ -122,9 +102,6 @@ class BuildingBlockVideoEdit extends BuildingBlockEdit
         $this->layout->addHtmlHeadEntrySet($player->getHtmlHeadEntrySet());
     }
 
-
-
-
     protected function loadObject()
     {
         parent::loadObject();
@@ -138,9 +115,6 @@ class BuildingBlockVideoEdit extends BuildingBlockEdit
         );
     }
 
-
-
-
     protected function buildNavBar()
     {
         parent::buildNavBar();
@@ -153,6 +127,4 @@ class BuildingBlockVideoEdit extends BuildingBlockEdit
             $this->navbar->createEntry(Building::_('Edit Video Content'));
         }
     }
-
-
 }

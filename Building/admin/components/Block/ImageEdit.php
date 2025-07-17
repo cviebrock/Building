@@ -6,31 +6,20 @@
  */
 class BuildingBlockImageEdit extends BuildingBlockEdit
 {
-
-
     /**
      * @var SiteImageSet
      */
     protected $image_set;
-
-
-
 
     protected function getUiXml()
     {
         return __DIR__ . '/image-edit.xml';
     }
 
-
-
-
     protected function getImageSetShortname()
     {
         return 'block';
     }
-
-
-
 
     protected function getImageSet()
     {
@@ -56,9 +45,6 @@ class BuildingBlockImageEdit extends BuildingBlockEdit
         return $this->image_set;
     }
 
-
-
-
     protected function getNewImageInstance()
     {
         $class_name = SwatDBClassMap::get('SiteImage');
@@ -69,10 +55,7 @@ class BuildingBlockImageEdit extends BuildingBlockEdit
         return $image;
     }
 
-
-
     // init phase
-
 
     protected function initInternal()
     {
@@ -82,9 +65,6 @@ class BuildingBlockImageEdit extends BuildingBlockEdit
             $this->ui->getWidget('image_upload')->required = true;
         }
     }
-
-
-
 
     protected function initObject()
     {
@@ -98,10 +78,7 @@ class BuildingBlockImageEdit extends BuildingBlockEdit
         }
     }
 
-
-
     // process phase
-
 
     protected function updateObject()
     {
@@ -119,9 +96,6 @@ class BuildingBlockImageEdit extends BuildingBlockEdit
             );
         }
     }
-
-
-
 
     protected function processImage()
     {
@@ -143,9 +117,6 @@ class BuildingBlockImageEdit extends BuildingBlockEdit
         }
     }
 
-
-
-
     protected function saveObject()
     {
         parent::saveObject();
@@ -155,10 +126,7 @@ class BuildingBlockImageEdit extends BuildingBlockEdit
         }
     }
 
-
-
     // build phase
-
 
     protected function loadObject()
     {
@@ -186,9 +154,6 @@ class BuildingBlockImageEdit extends BuildingBlockEdit
         }
     }
 
-
-
-
     protected function buildNavBar()
     {
         parent::buildNavBar();
@@ -201,6 +166,4 @@ class BuildingBlockImageEdit extends BuildingBlockEdit
             $this->navbar->createEntry(Building::_('Edit Image Content'));
         }
     }
-
-
 }

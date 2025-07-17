@@ -8,8 +8,6 @@
  */
 class BuildingBlockAdminCompositeView extends BuildingBlockCompositeView
 {
-
-
     /**
      * @var SwatToolLink
      */
@@ -19,9 +17,6 @@ class BuildingBlockAdminCompositeView extends BuildingBlockCompositeView
      * @var SwatToolLink
      */
     protected $delete_link;
-
-
-
 
     public function __construct(SiteApplication $app)
     {
@@ -37,9 +32,6 @@ class BuildingBlockAdminCompositeView extends BuildingBlockCompositeView
         $this->delete_link->title = Building::_('Delete');
         $this->delete_link->classes[] = 'building-block-delete-link';
     }
-
-
-
 
     public function display($block)
     {
@@ -57,18 +49,12 @@ class BuildingBlockAdminCompositeView extends BuildingBlockCompositeView
         }
     }
 
-
-
-
     protected function define()
     {
         $this->definePart('summary');
         $this->definePart('edit-link');
         $this->definePart('delete-link');
     }
-
-
-
 
     protected function displayHeader(BuildingBlock $block)
     {
@@ -117,9 +103,6 @@ class BuildingBlockAdminCompositeView extends BuildingBlockCompositeView
         }
     }
 
-
-
-
     protected function displayEditLink(BuildingBlock $block)
     {
         if ($this->getMode('edit-link') > SiteView::MODE_NONE) {
@@ -164,9 +147,6 @@ class BuildingBlockAdminCompositeView extends BuildingBlockCompositeView
         }
     }
 
-
-
-
     protected function displayDeleteLink(BuildingBlock $block)
     {
         if ($this->getMode('delete-link') > SiteView::MODE_NONE) {
@@ -185,9 +165,6 @@ class BuildingBlockAdminCompositeView extends BuildingBlockCompositeView
             $this->delete_link->display();
         }
     }
-
-
-
 
     protected function displaySummary(BuildingBlock $block)
     {
@@ -222,6 +199,4 @@ class BuildingBlockAdminCompositeView extends BuildingBlockCompositeView
             $header->display();
         }
     }
-
-
 }
