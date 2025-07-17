@@ -1,46 +1,52 @@
 {
-	"name": "silverorange/building",
-	"description": "Basic CMS framework.",
-	"type": "library",
-	"keywords": [ "cms" ],
-	"homepage": "https://github.com/silverorange/building",
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Michael Gauthier",
-			"email": "mike@silverorange.com"
-		}
-	],
-	"repositories": [
-		{
-			"type": "composer",
-			"url": "https://composer.silverorange.com",
-			"only": ["silverorange/*"]
-		}
-	],
-	"require": {
-		"php": ">=8.2",
-		"ext-mbstring": "*",
-		"silverorange/admin": "^5.4.0 || ^6.0.0 || ^7.0.0",
-		"silverorange/site": "^9.0.0 || ^10.1.1 || ^11.0.0 || ^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0",
-		"silverorange/swat": "^5.0.0 || ^6.0.0 || ^7.0.0"
-	},
-	"require-dev": {
-		"friendsofphp/php-cs-fixer": "3.64.0",
-		"phpstan/phpstan": "^1.12"
-	},
-	"scripts": {
-		"phpcs": "./vendor/bin/php-cs-fixer check -v",
-		"phpcs:ci": "./vendor/bin/php-cs-fixer check --config=.php-cs-fixer.php --no-interaction --show-progress=none --diff --using-cache=no -vvv",
-		"phpcs:write": "./vendor/bin/php-cs-fixer fix -v",
-		"phpstan": "./vendor/bin/phpstan analyze",
-		"phpstan:ci": "./vendor/bin/phpstan analyze -vvv --no-progress --memory-limit 2G",
-		"phpstan:baseline": "./vendor/bin/phpstan analyze --generate-baseline"
-	},
-	"autoload": {
-		"classmap": [ "Building/" ]
-	},
-	"config": {
-		"sort-packages": true
-	}
+  "name": "silverorange/building",
+  "description": "Basic CMS framework.",
+  "type": "library",
+  "keywords": [
+    "cms"
+  ],
+  "homepage": "https://github.com/silverorange/building",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Michael Gauthier",
+      "email": "mike@silverorange.com"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://composer.silverorange.com",
+      "only": [
+        "silverorange/*"
+      ]
+    }
+  ],
+  "require": {
+    "php": ">=8.2",
+    "ext-mbstring": "*",
+    "silverorange/admin": "^5.4.0 || ^6.0.0 || ^7.0.0",
+    "silverorange/site": "^9.0.0 || ^10.1.1 || ^11.0.0 || ^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0",
+    "silverorange/swat": "^5.0.0 || ^6.0.0 || ^7.0.0"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "3.64.0",
+    "phpstan/phpstan": "^1.12"
+  },
+  "scripts": {
+    "phpcs": "./vendor/bin/php-cs-fixer check -v",
+    "phpcs:ci": "./vendor/bin/php-cs-fixer check --config=.php-cs-fixer.php --no-interaction --show-progress=none --diff --using-cache=no -vvv",
+    "phpcs:write": "./vendor/bin/php-cs-fixer fix -v",
+    "phpstan": "./vendor/bin/phpstan analyze",
+    "phpstan:ci": "./vendor/bin/phpstan analyze -vvv --no-progress --memory-limit 2G",
+    "phpstan:baseline": "./vendor/bin/phpstan analyze --generate-baseline"
+  },
+  "autoload": {
+    "classmap": [
+      "Building/"
+    ]
+  },
+  "config": {
+    "sort-packages": true
+  }
 }
