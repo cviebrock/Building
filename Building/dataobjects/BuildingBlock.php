@@ -44,17 +44,17 @@ class BuildingBlock extends SwatDBDataObject
 
         $this->registerInternalProperty(
             'attachment',
-            SwatDBClassMap::get('SiteAttachment')
+            SwatDBClassMap::get(SiteAttachment::class)
         );
 
         $this->registerInternalProperty(
             'image',
-            SwatDBClassMap::get('SiteImage')
+            SwatDBClassMap::get(SiteImage::class)
         );
 
         $this->registerInternalProperty(
             'media',
-            SwatDBClassMap::get('SiteVideoMedia')
+            SwatDBClassMap::get(SiteVideoMedia::class)
         );
 
         $this->id_field = 'integer:id';

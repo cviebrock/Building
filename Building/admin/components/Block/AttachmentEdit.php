@@ -28,7 +28,7 @@ class BuildingBlockAttachmentEdit extends BuildingBlockEdit
                 $this->attachment_set =
                     $this->getObject()->attachment->attachment_set;
             } else {
-                $class_name = SwatDBClassMap::get('SiteAttachmentSet');
+                $class_name = SwatDBClassMap::get(SiteAttachmentSet::class);
                 $this->attachment_set = new $class_name();
                 $this->attachment_set->setDatabase($this->app->db);
                 $shortname = $this->getAttachmentSetShortname();
@@ -48,7 +48,7 @@ class BuildingBlockAttachmentEdit extends BuildingBlockEdit
 
     protected function getNewAttachmentInstance()
     {
-        $class_name = SwatDBClassMap::get('SiteAttachment');
+        $class_name = SwatDBClassMap::get(SiteAttachment::class);
         $attachment = new $class_name();
         $attachment->setDatabase($this->app->db);
         $attachment->attachment_set = $this->getAttachmentSet();

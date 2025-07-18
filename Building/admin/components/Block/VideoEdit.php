@@ -28,7 +28,7 @@ class BuildingBlockVideoEdit extends BuildingBlockEdit
                     $media_id = $form->getHiddenField('media');
                 }
 
-                $class_name = SwatDBClassMap::get('SiteVideoMedia');
+                $class_name = SwatDBClassMap::get(SiteVideoMedia::class);
                 $this->media = new $class_name();
                 $this->media->setDatabase($this->app->db);
                 if (!$this->media->load($media_id)) {

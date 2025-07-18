@@ -13,7 +13,7 @@ class BuildingBlockWrapper extends SwatDBRecordsetWrapper
     protected function init()
     {
         parent::init();
-        $this->row_wrapper_class = SwatDBClassMap::get('BuildingBlock');
+        $this->row_wrapper_class = SwatDBClassMap::get(BuildingBlock::class);
         $this->index_field = 'id';
     }
 }

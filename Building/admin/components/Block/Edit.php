@@ -8,7 +8,7 @@ abstract class BuildingBlockEdit extends AdminObjectEdit
 {
     protected function getObjectClass()
     {
-        return 'BuildingBlock';
+        return BuildingBlock::class;
     }
 
     // process phase
