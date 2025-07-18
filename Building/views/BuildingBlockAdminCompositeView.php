@@ -1,230 +1,202 @@
 <?php
 
 /**
- * Block view that adds admin action links
+ * Block view that adds admin action links.
  *
- * @package   Building
  * @copyright 2014-2016 silverorange
  * @license   http://www.opensource.org/licenses/mit-license.html MIT License
  */
 class BuildingBlockAdminCompositeView extends BuildingBlockCompositeView
 {
-	// {{{ protected properties
+    /**
+     * @var SwatToolLink
+     */
+    protected $edit_link;
 
-	/**
-	 * @var SwatToolLink
-	 */
-	protected $edit_link;
+    /**
+     * @var SwatToolLink
+     */
+    protected $delete_link;
 
-	/**
-	 * @var SwatToolLink
-	 */
-	protected $delete_link;
+    public function __construct(SiteApplication $app)
+    {
+        parent::__construct($app);
 
-	// }}}
-	// {{{ public function __construct()
+        $this->edit_link = new SwatToolLink();
+        $this->edit_link->setFromStock('edit');
+        $this->edit_link->title = Building::_('Edit');
+        $this->edit_link->classes[] = 'building-block-edit-link';
 
-	public function __construct(SiteApplication $app)
-	{
-		parent::__construct($app);
+        $this->delete_link = new SwatToolLink();
+        $this->delete_link->setFromStock('delete');
+        $this->delete_link->title = Building::_('Delete');
+        $this->delete_link->classes[] = 'building-block-delete-link';
+    }
 
-		$this->edit_link = new SwatToolLink();
-		$this->edit_link->setFromStock('edit');
-		$this->edit_link->title = Building::_('Edit');
-		$this->edit_link->classes[] = 'building-block-edit-link';
+    public function display($block)
+    {
+        ob_start();
+        parent::display($block);
+        $composite_view = ob_get_clean();
 
-		$this->delete_link = new SwatToolLink();
-		$this->delete_link->setFromStock('delete');
-		$this->delete_link->title = Building::_('Delete');
-		$this->delete_link->classes[] = 'building-block-delete-link';
-	}
+        if ($composite_view != '') {
+            echo '<div class="building-block-admin-view">';
+            $this->displayHeader($block);
+            echo '<div class="building-block-admin-view-content">';
+            echo $composite_view;
+            echo '</div>';
+            echo '</div>';
+        }
+    }
 
-	// }}}
-	// {{{ public function display()
+    protected function define()
+    {
+        $this->definePart('summary');
+        $this->definePart('edit-link');
+        $this->definePart('delete-link');
+    }
 
-	public function display($block)
-	{
-		ob_start();
-		parent::display($block);
-		$composite_view = ob_get_clean();
+    protected function displayHeader(BuildingBlock $block)
+    {
+        $parts = [];
 
-		if ($composite_view != '') {
-			echo '<div class="building-block-admin-view">';
-			$this->displayHeader($block);
-			echo '<div class="building-block-admin-view-content">';
-			echo $composite_view;
-			echo '</div>';
-			echo '</div>';
-		}
-	}
+        ob_start();
+        $this->displaySummary($block);
+        $summary = ob_get_clean();
+        if ($summary != '') {
+            $parts[] = $summary;
+        }
 
-	// }}}
-	// {{{ protected function define()
+        ob_start();
+        $this->displayEditLink($block);
+        $link = ob_get_clean();
+        if ($link != '') {
+            $parts[] = $link;
+        }
 
-	protected function define()
-	{
-		$this->definePart('summary');
-		$this->definePart('edit-link');
-		$this->definePart('delete-link');
-	}
+        $type = BuildingBlockViewFactory::getViewType($block);
+        if ($type === 'building-block-video') {
+            $a_tag = new SwatHtmlTag('a');
+            $a_tag->class = 'swat-tool-link swat-tool-link-edit';
+            $a_tag->setContent(Building::_('Set Poster Frame'));
+            $a_tag->href = 'Media/PosterFrame?id=' . $block->media->id;
+            $parts[] = $a_tag;
+        }
 
-	// }}}
-	// {{{ protected function displayHeader()
+        ob_start();
+        $this->displayDeleteLink($block);
+        $link = ob_get_clean();
+        if ($link != '') {
+            $parts[] = $link;
+        }
 
-	protected function displayHeader(BuildingBlock $block)
-	{
-		$parts = array();
+        if (count($parts) > 0) {
+            $span = new SwatHtmlTag('span');
+            $span->class = 'building-block-admin-links';
+            $span->open();
 
-		ob_start();
-		$this->displaySummary($block);
-		$summary = ob_get_clean();
-		if ($summary != '') {
-			$parts[] = $summary;
-		}
+            foreach ($parts as $part) {
+                echo $part;
+            }
 
-		ob_start();
-		$this->displayEditLink($block);
-		$link = ob_get_clean();
-		if ($link != '') {
-			$parts[] = $link;
-		}
+            $span->close();
+        }
+    }
 
-		$type = BuildingBlockViewFactory::getViewType($block);
-		if ($type === 'building-block-video') {
-			$a_tag = new SwatHtmlTag('a');
-			$a_tag->class = 'swat-tool-link swat-tool-link-edit';
-			$a_tag->setContent(Building::_('Set Poster Frame'));
-			$a_tag->href = 'Media/PosterFrame?id='.$block->media->id;
-			$parts[] = $a_tag;
-		}
+    protected function displayEditLink(BuildingBlock $block)
+    {
+        if ($this->getMode('edit-link') > SiteView::MODE_NONE) {
+            $link = $this->getLink('edit-link');
 
-		ob_start();
-		$this->displayDeleteLink($block);
-		$link = ob_get_clean();
-		if ($link != '') {
-			$parts[] = $link;
-		}
+            if ($link === false) {
+                $this->edit_link->sensitive = false;
+            } else {
+                if ($link === true) {
+                    $type = BuildingBlockViewFactory::getViewType($block);
+                    switch ($type) {
+                        case 'building-block-audio':
+                            $link = sprintf('Block/AudioEdit?id=%s', $block->id);
+                            break;
 
-		if (count($parts) > 0) {
-			$span = new SwatHtmlTag('span');
-			$span->class = 'building-block-admin-links';
-			$span->open();
+                        case 'building-block-video':
+                            $link = sprintf('Block/VideoEdit?id=%s', $block->id);
+                            break;
 
-			foreach ($parts as $part) {
-				echo $part;
-			}
+                        case 'building-block-image':
+                            $link = sprintf('Block/ImageEdit?id=%s', $block->id);
+                            break;
 
-			$span->close();
-		}
-	}
+                        case 'building-block-attachment':
+                            $link = sprintf(
+                                'Block/AttachmentEdit?id=%s',
+                                $block->id
+                            );
+                            break;
 
-	// }}}
-	// {{{ protected function displayEditLink()
+                        case 'building-block-xhtml':
+                        default:
+                            $link = sprintf('Block/XHTMLEdit?id=%s', $block->id);
+                            break;
+                    }
+                }
+                $this->edit_link->link = $link;
+                $this->edit_link->sensitive = true;
+            }
 
-	protected function displayEditLink(BuildingBlock $block)
-	{
-		if ($this->getMode('edit-link') > SiteView::MODE_NONE) {
-			$link = $this->getLink('edit-link');
+            $this->edit_link->display();
+        }
+    }
 
-			if ($link === false) {
-				$this->edit_link->sensitive = false;
-			} else {
-				if ($link === true) {
-					$type = BuildingBlockViewFactory::getViewType($block);
-					switch ($type) {
-					case 'building-block-audio':
-						$link = sprintf('Block/AudioEdit?id=%s', $block->id);
-						break;
+    protected function displayDeleteLink(BuildingBlock $block)
+    {
+        if ($this->getMode('delete-link') > SiteView::MODE_NONE) {
+            $link = $this->getLink('delete-link');
 
-					case 'building-block-video':
-						$link = sprintf('Block/VideoEdit?id=%s', $block->id);
-						break;
+            if ($link === false) {
+                $this->delete_link->sensitive = false;
+            } else {
+                if ($link === true) {
+                    $link = sprintf('Block/Delete?id=%s', $block->id);
+                }
+                $this->delete_link->link = $link;
+                $this->delete_link->sensitive = true;
+            }
 
-					case 'building-block-image':
-						$link = sprintf('Block/ImageEdit?id=%s', $block->id);
-						break;
+            $this->delete_link->display();
+        }
+    }
 
-					case 'building-block-attachment':
-						$link = sprintf(
-							'Block/AttachmentEdit?id=%s',
-							$block->id
-						);
-						break;
+    protected function displaySummary(BuildingBlock $block)
+    {
+        if ($this->getMode('summary') > SiteView::MODE_NONE) {
+            $type = BuildingBlockViewFactory::getViewType($block);
+            switch ($type) {
+                case 'building-block-audio':
+                    $summary = Building::_('Audio Content');
+                    break;
 
-					case 'building-block-xhtml':
-					default:
-						$link = sprintf('Block/XHTMLEdit?id=%s', $block->id);
-						break;
-					}
-				}
-				$this->edit_link->link = $link;
-				$this->edit_link->sensitive = true;
-			}
+                case 'building-block-video':
+                    $summary = Building::_('Video Content');
+                    break;
 
-			$this->edit_link->display();
-		}
-	}
+                case 'building-block-image':
+                    $summary = Building::_('Image Content');
+                    break;
 
-	// }}}
-	// {{{ protected function displayDeleteLink()
+                case 'building-block-attachment':
+                    $summary = Building::_('Attachment');
+                    break;
 
-	protected function displayDeleteLink(BuildingBlock $block)
-	{
-		if ($this->getMode('delete-link') > SiteView::MODE_NONE) {
-			$link = $this->getLink('delete-link');
+                case 'building-block-xhtml':
+                default:
+                    $summary = Building::_('Text Content');
+                    break;
+            }
 
-			if ($link === false) {
-				$this->delete_link->sensitive = false;
-			} else {
-				if ($link === true) {
-					$link = sprintf('Block/Delete?id=%s', $block->id);
-				}
-				$this->delete_link->link = $link;
-				$this->delete_link->sensitive = true;
-			}
-
-			$this->delete_link->display();
-		}
-	}
-
-	// }}}
-	// {{{ protected function displaySummary()
-
-	protected function displaySummary(BuildingBlock $block)
-	{
-		if ($this->getMode('summary') > SiteView::MODE_NONE) {
-			$type = BuildingBlockViewFactory::getViewType($block);
-			switch ($type) {
-			case 'building-block-audio':
-				$summary = Building::_('Audio Content');
-				break;
-
-			case 'building-block-video':
-				$summary = Building::_('Video Content');
-				break;
-
-			case 'building-block-image':
-				$summary = Building::_('Image Content');
-				break;
-
-			case 'building-block-attachment':
-				$summary = Building::_('Attachment');
-				break;
-
-			case 'building-block-xhtml':
-			default:
-				$summary = Building::_('Text Content');
-				break;
-			}
-
-			$header = new SwatHtmlTag('h4');
-			$header->setContent($summary);
-			$header->class = 'building-block-admin-summary';
-			$header->display();
-		}
-	}
-
-	// }}}
+            $header = new SwatHtmlTag('h4');
+            $header->setContent($summary);
+            $header->class = 'building-block-admin-summary';
+            $header->display();
+        }
+    }
 }
-
-?>

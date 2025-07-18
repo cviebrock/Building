@@ -1,30 +1,20 @@
 <?php
 
 /**
- * @package   Building
  * @copyright 2014-2016 silverorange
  * @license   http://www.opensource.org/licenses/mit-license.html MIT License
  */
 abstract class BuildingBlockEdit extends AdminObjectEdit
 {
-	// {{{ protected function getObjectClass()
+    protected function getObjectClass()
+    {
+        return 'BuildingBlock';
+    }
 
-	protected function getObjectClass()
-	{
-		return 'BuildingBlock';
-	}
+    // process phase
 
-	// }}}
-
-	// process phase
-	// {{{ protected function getSavedMessagePrimaryContent()
-
-	protected function getSavedMessagePrimaryContent()
-	{
-		return Building::_('Content has been saved.');
-	}
-
-	// }}}
+    protected function getSavedMessagePrimaryContent()
+    {
+        return Building::_('Content has been saved.');
+    }
 }
-
-?>

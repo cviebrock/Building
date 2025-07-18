@@ -1,161 +1,130 @@
 <?php
 
 /**
- * @package   Building
  * @copyright 2016 silverorange
  * @license   http://www.opensource.org/licenses/mit-license.html MIT License
  */
 class BuildingBlockVideoEdit extends BuildingBlockEdit
 {
-	// {{{ protected properties
+    /**
+     * @var SiteVideoMedia
+     */
+    protected $media;
 
-	/**
-	 * @var SiteVideoMedia
-	 */
-	protected $media;
+    protected function getUiXml()
+    {
+        return __DIR__ . '/video-edit.xml';
+    }
 
-	// }}}
-	// {{{ protected function getUiXml()
+    protected function getMedia()
+    {
+        if (!$this->media instanceof SiteVideoMedia) {
+            if ($this->getObject()->media instanceof SiteVideoMedia) {
+                $this->media = $this->getObject()->media;
+            } else {
+                $media_id = $this->app->initVar('media');
+                if ($media_id === null) {
+                    $form = $this->ui->getWidget('edit_form');
+                    $media_id = $form->getHiddenField('media');
+                }
 
-	protected function getUiXml()
-	{
-		return __DIR__.'/video-edit.xml';
-	}
+                $class_name = SwatDBClassMap::get('SiteVideoMedia');
+                $this->media = new $class_name();
+                $this->media->setDatabase($this->app->db);
+                if (!$this->media->load($media_id)) {
+                    throw new AdminNotFoundException(
+                        sprintf(
+                            'Media with id “%s” not found.',
+                            $media_id
+                        )
+                    );
+                }
+            }
+        }
 
-	// }}}
-	// {{{ protected function getMedia()
+        return $this->media;
+    }
 
-	protected function getMedia()
-	{
-		if (!$this->media instanceof SiteVideoMedia) {
-			if ($this->getObject()->media instanceof SiteVideoMedia) {
-				$this->media = $this->getObject()->media;
-			} else {
-				$media_id = $this->app->initVar('media');
-				if ($media_id === null) {
-					$form = $this->ui->getWidget('edit_form');
-					$media_id = $form->getHiddenField('media');
-				}
+    // init phase
 
-				$class_name = SwatDBClassMap::get('SiteVideoMedia');
-				$this->media = new $class_name();
-				$this->media->setDatabase($this->app->db);
-				if (!$this->media->load($media_id)) {
-					throw new AdminNotFoundException(
-						sprintf(
-							'Media with id “%s” not found.',
-							$media_id
-						)
-					);
-				}
-			}
-		}
+    protected function initObject()
+    {
+        parent::initObject();
 
-		return $this->media;
-	}
+        $block = $this->getObject();
+        if (!$this->isNew() && !$block->media instanceof SiteVideoMedia) {
+            throw new AdminNotFoundException(
+                'Can only edit video content.'
+            );
+        }
+    }
 
-	// }}}
+    // process phase
 
-	// init phase
-	// {{{ protected function initObject()
+    protected function updateObject()
+    {
+        parent::updateObject();
 
-	protected function initObject()
-	{
-		parent::initObject();
+        $media = $this->getMedia();
+        $this->getObject()->media = $media->id;
 
-		$block = $this->getObject();
-		if (!$this->isNew() && !$block->media instanceof SiteVideoMedia) {
-			throw new AdminNotFoundException(
-				'Can only edit video content.'
-			);
-		}
-	}
+        $this->assignUiValuesToObject(
+            $this->getObject()->media,
+            [
+                'title',
+                'description',
+            ]
+        );
+    }
 
-	// }}}
+    protected function saveObject()
+    {
+        parent::saveObject();
 
-	// process phase
-	// {{{ protected function updateObject()
+        $this->getObject()->media->save();
+    }
 
-	protected function updateObject()
-	{
-		parent::updateObject();
+    // build phase
 
-		$media = $this->getMedia();
-		$this->getObject()->media = $media->id;
+    protected function buildInternal()
+    {
+        parent::buildInternal();
 
-		$this->assignUiValuesToObject(
-			$this->getObject()->media,
-			array(
-				'title',
-				'description'
-			)
-		);
-	}
+        $media = $this->getMedia();
+        $media->setFileBase('media');
 
-	// }}}
-	// {{{ protected function saveObject()
+        $this->ui->getWidget('edit_form')->addHiddenField('media', $media->id);
 
-	protected function saveObject()
-	{
-		parent::saveObject();
+        $player = $media->getMediaPlayer($this->app);
+        ob_start();
+        $player->display();
+        $this->ui->getWidget('player')->content = ob_get_clean();
+        $this->layout->addHtmlHeadEntrySet($player->getHtmlHeadEntrySet());
+    }
 
-		$this->getObject()->media->save();
-	}
+    protected function loadObject()
+    {
+        parent::loadObject();
 
-	// }}}
+        $this->assignObjectValuesToUi(
+            $this->getObject()->media,
+            [
+                'title',
+                'description',
+            ]
+        );
+    }
 
-	// build phase
-	// {{{ protected function buildInternal()
+    protected function buildNavBar()
+    {
+        parent::buildNavBar();
 
-	protected function buildInternal()
-	{
-		parent::buildInternal();
+        $this->navbar->popEntry();
 
-		$media = $this->getMedia();
-		$media->setFileBase('media');
-
-		$this->ui->getWidget('edit_form')->addHiddenField('media', $media->id);
-
-		$player = $media->getMediaPlayer($this->app);
-		ob_start();
-		$player->display();
-		$this->ui->getWidget('player')->content = ob_get_clean();
-		$this->layout->addHtmlHeadEntrySet($player->getHtmlHeadEntrySet());
-	}
-
-	// }}}
-	// {{{ protected function loadObject()
-
-	protected function loadObject()
-	{
-		parent::loadObject();
-
-		$this->assignObjectValuesToUi(
-			$this->getObject()->media,
-			array(
-				'title',
-				'description'
-			)
-		);
-	}
-
-	// }}}
-	// {{{ protected function buildNavBar()
-
-	protected function buildNavBar()
-	{
-		parent::buildNavBar();
-
-		$this->navbar->popEntry();
-
-		if ($this->isNew()) {
-			$this->navbar->createEntry(Building::_('New Video Content'));
-		} else {
-			$this->navbar->createEntry(Building::_('Edit Video Content'));
-		}
-	}
-
-	// }}}
+        if ($this->isNew()) {
+            $this->navbar->createEntry(Building::_('New Video Content'));
+        } else {
+            $this->navbar->createEntry(Building::_('Edit Video Content'));
+        }
+    }
 }
-
-?>

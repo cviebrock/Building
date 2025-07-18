@@ -1,220 +1,178 @@
 <?php
 
 /**
- * @package   Building
  * @copyright 2014-2016 silverorange
  * @license   http://www.opensource.org/licenses/mit-license.html MIT License
  */
 class BuildingBlockAttachmentEdit extends BuildingBlockEdit
 {
-	// {{{ protected properties
+    /**
+     * @var SiteAttachmentSet
+     */
+    protected $attachment_set;
 
-	/**
-	 * @var SiteAttachmentSet
-	 */
-	protected $attachment_set;
+    protected function getUiXml()
+    {
+        return __DIR__ . '/attachment-edit.xml';
+    }
 
-	// }}}
-	// {{{ protected function getUiXml()
+    protected function getAttachmentSetShortname()
+    {
+        return 'block';
+    }
 
-	protected function getUiXml()
-	{
-		return __DIR__.'/attachment-edit.xml';
-	}
+    protected function getAttachmentSet()
+    {
+        if (!$this->attachment_set instanceof SiteAttachmentSet) {
+            if ($this->getObject()->attachment instanceof SiteAttachment) {
+                $this->attachment_set =
+                    $this->getObject()->attachment->attachment_set;
+            } else {
+                $class_name = SwatDBClassMap::get('SiteAttachmentSet');
+                $this->attachment_set = new $class_name();
+                $this->attachment_set->setDatabase($this->app->db);
+                $shortname = $this->getAttachmentSetShortname();
+                if (!$this->attachment_set->loadByShortname($shortname)) {
+                    throw new AdminNotFoundException(
+                        sprintf(
+                            'Attachment set with shortname “%s” not found.',
+                            $shortname
+                        )
+                    );
+                }
+            }
+        }
 
-	// }}}
-	// {{{ protected function getAttachmentSetShortname()
+        return $this->attachment_set;
+    }
 
-	protected function getAttachmentSetShortname()
-	{
-		return 'block';
-	}
+    protected function getNewAttachmentInstance()
+    {
+        $class_name = SwatDBClassMap::get('SiteAttachment');
+        $attachment = new $class_name();
+        $attachment->setDatabase($this->app->db);
+        $attachment->attachment_set = $this->getAttachmentSet();
 
-	// }}}
-	// {{{ protected function getAttachmentSet()
+        return $attachment;
+    }
 
-	protected function getAttachmentSet()
-	{
-		if (!$this->attachment_set instanceof SiteAttachmentSet) {
-			if ($this->getObject()->attachment instanceof SiteAttachment) {
-				$this->attachment_set =
-					$this->getObject()->attachment->attachment_set;
-			} else {
-				$class_name = SwatDBClassMap::get('SiteAttachmentSet');
-				$this->attachment_set = new $class_name();
-				$this->attachment_set->setDatabase($this->app->db);
-				$shortname = $this->getAttachmentSetShortname();
-				if (!$this->attachment_set->loadByShortname($shortname)) {
-					throw new AdminNotFoundException(
-						sprintf(
-							'Attachment set with shortname “%s” not found.',
-							$shortname
-						)
-					);
-				}
-			}
-		}
+    // init phase
 
-		return $this->attachment_set;
-	}
+    protected function initInternal()
+    {
+        parent::initInternal();
 
-	// }}}
-	// {{{ protected function getNewAttachmentInstance()
+        if ($this->isNew()) {
+            $this->ui->getWidget('file_upload')->required = true;
+        }
+    }
 
-	protected function getNewAttachmentInstance()
-	{
-		$class_name = SwatDBClassMap::get('SiteAttachment');
-		$attachment = new $class_name();
-		$attachment->setDatabase($this->app->db);
-		$attachment->attachment_set = $this->getAttachmentSet();
-		return $attachment;
-	}
+    protected function initObject()
+    {
+        parent::initObject();
 
-	// }}}
+        $block = $this->getObject();
+        if (!$this->isNew() && !$block->attachment instanceof SiteAttachment) {
+            throw new AdminNotFoundException(
+                'Can only edit attachment content.'
+            );
+        }
+    }
 
-	// init phase
-	// {{{ protected function initInternal()
+    // process phase
 
-	protected function initInternal()
-	{
-		parent::initInternal();
+    protected function updateObject()
+    {
+        parent::updateObject();
 
-		if ($this->isNew()) {
-			$this->ui->getWidget('file_upload')->required = true;
-		}
-	}
+        $this->processAttachment();
 
-	// }}}
-	// {{{ protected function initObject()
+        if ($this->getObject()->attachment instanceof SiteAttachment) {
+            $this->assignUiValuesToObject(
+                $this->getObject()->attachment,
+                [
+                    'title',
+                ]
+            );
+        }
+    }
 
-	protected function initObject()
-	{
-		parent::initObject();
+    protected function processAttachment()
+    {
+        $upload = $this->ui->getWidget('file_upload');
+        if ($upload->isUploaded()) {
+            $block = $this->getObject();
 
-		$block = $this->getObject();
-		if (!$this->isNew() && !$block->attachment instanceof SiteAttachment) {
-			throw new AdminNotFoundException(
-				'Can only edit attachment content.'
-			);
-		}
-	}
+            $attachment = $this->getNewAttachmentInstance();
 
-	// }}}
+            $attachment->file_size = $upload->getSize();
+            $attachment->mime_type = $upload->getMimeType();
+            $attachment->original_filename = $upload->getFileName();
+            $attachment->createdate = $this->getCurrentTime();
 
-	// process phase
-	// {{{ protected function updateObject()
+            $attachment->setFileBase($this->getFileBase());
 
-	protected function updateObject()
-	{
-		parent::updateObject();
+            $this->assignUiValuesToObject(
+                $attachment,
+                [
+                    'title',
+                ]
+            );
 
-		$this->processAttachment();
+            $attachment->process($upload->getTempFileName());
 
-		if ($this->getObject()->attachment instanceof SiteAttachment) {
-			$this->assignUiValuesToObject(
-				$this->getObject()->attachment,
-				array(
-					'title',
-				)
-			);
-		}
-	}
+            // Delete the old attachment. Prevents browser/CDN caching.
+            if (!$this->isNew()) {
+                $block->attachment->setFileBase($this->getFileBase());
+                $block->attachment->delete();
+            }
 
-	// }}}
-	// {{{ protected function processAttachment()
+            $block->attachment = $attachment;
+        }
+    }
 
-	protected function processAttachment()
-	{
-		$upload = $this->ui->getWidget('file_upload');
-		if ($upload->isUploaded()) {
-			$block = $this->getObject();
+    protected function saveObject()
+    {
+        parent::saveObject();
 
-			$attachment = $this->getNewAttachmentInstance();
+        if ($this->getObject()->attachment instanceof SiteAttachment) {
+            $this->getObject()->attachment->save();
+        }
+    }
 
-			$attachment->file_size         = $upload->getSize();
-			$attachment->mime_type         = $upload->getMimeType();
-			$attachment->original_filename = $upload->getFileName();
-			$attachment->createdate        = $this->getCurrentTime();
+    protected function getFileBase()
+    {
+        return '../attachments';
+    }
 
-			$attachment->setFileBase($this->getFileBase());
+    // build phase
 
-			$this->assignUiValuesToObject(
-				$attachment,
-				array(
-					'title',
-				)
-			);
+    protected function loadObject()
+    {
+        parent::loadObject();
 
-			$attachment->process($upload->getTempFileName());
+        $attachment = $this->getObject()->attachment;
 
-			// Delete the old attachment. Prevents browser/CDN caching.
-			if (!$this->isNew()) {
-				$block->attachment->setFileBase($this->getFileBase());
-				$block->attachment->delete();
-			}
+        if ($attachment instanceof SiteAttachment) {
+            $this->assignObjectValuesToUi(
+                $attachment,
+                [
+                    'title',
+                ]
+            );
+        }
+    }
 
-			$block->attachment = $attachment;
-		}
-	}
+    protected function buildNavBar()
+    {
+        parent::buildNavBar();
 
-	// }}}
-	// {{{ protected function saveObject()
+        $this->navbar->popEntry();
 
-	protected function saveObject()
-	{
-		parent::saveObject();
-
-		if ($this->getObject()->attachment instanceof SiteAttachment) {
-			$this->getObject()->attachment->save();
-		}
-	}
-
-	// }}}
-	// {{{ protected function getFileBase()
-
-	protected function getFileBase()
-	{
-		return '../attachments';
-	}
-
-	// }}}
-
-	// build phase
-	// {{{ protected function loadObject()
-
-	protected function loadObject()
-	{
-		parent::loadObject();
-
-		$attachment = $this->getObject()->attachment;
-
-		if ($attachment instanceof SiteAttachment) {
-			$this->assignObjectValuesToUi(
-				$attachment,
-				array(
-					'title',
-				)
-			);
-		}
-	}
-
-	// }}}
-	// {{{ protected function buildNavBar()
-
-	protected function buildNavBar()
-	{
-		parent::buildNavBar();
-
-		$this->navbar->popEntry();
-
-		if ($this->isNew()) {
-			$this->navbar->createEntry(Building::_('New File Content'));
-		} else {
-			$this->navbar->createEntry(Building::_('Edit File Content'));
-		}
-	}
-
-	// }}}
+        if ($this->isNew()) {
+            $this->navbar->createEntry(Building::_('New File Content'));
+        } else {
+            $this->navbar->createEntry(Building::_('Edit File Content'));
+        }
+    }
 }
-
-?>

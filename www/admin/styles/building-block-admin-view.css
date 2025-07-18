@@ -1,127 +1,128 @@
 .building-block-admin-view {
-	margin: -16px -15px 16px;
-	padding: 0;
-	border-bottom: 1px solid #efe8da;
+  margin: -16px -15px 16px;
+  padding: 0;
+  border-bottom: 1px solid #efe8da;
 }
 
 .building-block-admin-view-content {
-	padding: 16px 15px;
+  padding: 16px 15px;
 }
 
 .building-block-admin-links {
-	display: block;
-	background: #fff;
-	padding: 3px 15px;
-	margin: 0;
-	border-bottom: 1px solid #eee;
-	background: #f8f8f8;
+  display: block;
+  background: #fff;
+  padding: 3px 15px;
+  margin: 0;
+  border-bottom: 1px solid #eee;
+  background: #f8f8f8;
 }
 
 .building-block-admin-links a {
-	border: 0;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	box-shadow: none;
-	background: transparent;
-	color: #3465a4;
-	cursor: pointer;
-	display: inline-block;
-	vertical-align: middle;
-	padding: 8px 6px;
-	text-shadow: none;
-	border-radius: 0;
+  border: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  background: transparent;
+  color: #3465a4;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 8px 6px;
+  text-shadow: none;
+  border-radius: 0;
 }
 
 .building-block-admin-links a:hover {
-	text-shadow: none;
-	background: #e5e5e5;
-	cursor: pointer;
+  text-shadow: none;
+  background: #e5e5e5;
+  cursor: pointer;
 }
 
 .building-block-admin-links a:active {
-	text-shadow: none;
-	background: #e5e5e5;
-	position: static;
-	color: #3465a4;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	box-shadow: none;
+  text-shadow: none;
+  background: #e5e5e5;
+  position: static;
+  color: #3465a4;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }
 
 .building-block-admin-links a:hover .swat-tool-link-title,
 .building-block-admin-links a:active .swat-tool-link-title {
-	text-shadow: none;
-	text-decoration: underline;
+  text-shadow: none;
+  text-decoration: underline;
 }
 
 .building-block-admin-summary {
-	display: inline-block;
-	vertical-align: middle;
-	margin: 0 20px 0 0;
-	color: #6b5d40;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 20px 0 0;
+  color: #6b5d40;
 }
 
 .building-block-attachment-wrapper {
-	display: inline-block;
-	text-decoration: none;
-	min-height: 48px;
-	position: relative;
-	padding: 4px 8px 4px 4px;
+  display: inline-block;
+  text-decoration: none;
+  min-height: 48px;
+  position: relative;
+  padding: 4px 8px 4px 4px;
 }
 .building-block-attachment-wrapper:hover {
-	background: #e5e5e5;
+  background: #e5e5e5;
 }
 
 .building-block-attachment-wrapper:after {
-	content: '';
-	display: block;
-	width: 0;
-	height: 0;
-	clear: both;
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  clear: both;
 }
 
 .building-block-attachment-icon {
-	display: block;
-	position: absolute;
-	left: 4px;
-	top: 4px;
-	width: 48px;
-	height: 48px;
-	background: url('../images/attachment.png') center center no-repeat transparent;
+  display: block;
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 48px;
+  height: 48px;
+  background: url('../images/attachment.png') center center no-repeat
+    transparent;
 }
 
 .building-block-attachment-title {
-	display: block;
-	float: left;
-	clear: left;
-	margin-left: 52px;
-	margin-bottom: 4px;
-	text-decoration: underline;
+  display: block;
+  float: left;
+  clear: left;
+  margin-left: 52px;
+  margin-bottom: 4px;
+  text-decoration: underline;
 }
 
 .building-block-attachment-details {
-	display: block;
-	float: left;
-	clear: left;
-	margin-left: 52px;
-	font-size: 11px;
-	color: #888;
+  display: block;
+  float: left;
+  clear: left;
+  margin-left: 52px;
+  font-size: 11px;
+  color: #888;
 }
 
 .building-block-video-view {
-	max-width: 500px;
+  max-width: 500px;
 }
 
 .building-block-video-title,
 .building-block-image-title {
-	display: block;
-	margin-top: 10px;
-	font-weight: bold;
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
 }
 
 .building-block-video-description,
 .building-block-image-desciption {
-	display: block;
-	margin-top: 10px;
-	font-size: 11px;
+  display: block;
+  margin-top: 10px;
+  font-size: 11px;
 }

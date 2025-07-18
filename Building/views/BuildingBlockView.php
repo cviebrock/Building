@@ -1,96 +1,72 @@
 <?php
 
 /**
- * @package   Building
  * @copyright 2014-2016 silverorange
  * @license   http://www.opensource.org/licenses/mit-license.html MIT License
  */
 abstract class BuildingBlockView extends SiteView
 {
-	// {{{ protected properties
+    /**
+     * @var array
+     *
+     * @see BuildingBlockView::addCSSClassName()
+     * @see BuildingBlockView::removeCSSClassName()
+     */
+    protected $css_classes = [];
 
-	/**
-	 * @var array
-	 * @see BuildingBlockView::addCSSClassName()
-	 * @see BuildingBlockView::removeCSSClassName()
-	 */
-	protected $css_classes = array();
+    public function display($block)
+    {
+        if (!$block instanceof BuildingBlock) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The view %s can only display BuildingBlock objects.',
+                    get_class($this)
+                )
+            );
+        }
 
-	// }}}
-	// {{{ public function display()
+        $container = new SwatHtmlTag('div');
+        $container->id = 'block_' . $block->id;
+        $container->class = implode(' ', $this->getCSSClassNames());
+        $container->open();
 
-	public function display($block)
-	{
-		if (!$block instanceof BuildingBlock) {
-			throw new InvalidArgumentException(
-				sprintf(
-					'The view %s can only display BuildingBlock objects.',
-					get_class($this)
-				)
-			);
-		}
+        $this->displayContent($block);
 
-		$container = new SwatHtmlTag('div');
-		$container->id = 'block_'.$block->id;
-		$container->class = implode(' ', $this->getCSSClassNames());
-		$container->open();
+        $container->close();
+    }
 
-		$this->displayContent($block);
+    public function setCSSClassNames(array $class_names)
+    {
+        $this->css_classes = array_unique($class_names);
+    }
 
-		$container->close();
-	}
+    public function addCSSClassName($class_name)
+    {
+        $this->css_classes = array_unique(
+            array_merge(
+                [$class_name],
+                $this->css_classes
+            )
+        );
+    }
 
-	// }}}
-	// {{{ public function setCSSClassNames()
+    public function removeCSSClassName($class_name)
+    {
+        $this->css_classes = array_diff(
+            $this->css_classes,
+            [$class_name]
+        );
+    }
 
-	public function setCSSClassNames(array $class_names)
-	{
-		$this->css_classes = array_unique($class_names);
-	}
+    abstract protected function displayContent(BuildingBlock $block);
 
-	// }}}
-	// {{{ public function addCSSClassName()
-
-	public function addCSSClassName($class_name)
-	{
-		$this->css_classes = array_unique(
-			array_merge(
-				array($class_name),
-				$this->css_classes
-			)
-		);
-	}
-
-	// }}}
-	// {{{ public function removeCSSClassName()
-
-	public function removeCSSClassName($class_name)
-	{
-		$this->css_classes = array_diff(
-			$this->css_classes,
-			array($class_name)
-		);
-	}
-
-	// }}}
-	// {{{ abstract protected function displayContent()
-
-	abstract protected function displayContent(BuildingBlock $block);
-
-	// }}}
-	// {{{ protected function getCSSClassNames()
-
-	protected function getCSSClassNames()
-	{
-		return array_unique(
-			array_merge(
-				array('building-block-view'),
-				$this->css_classes
-			)
-		);
-	}
-
-	// }}}
+    protected function getCSSClassNames()
+    {
+        return array_unique(
+            array_merge(
+                ['building-block-view'],
+                $this->css_classes
+            )
+        );
+    }
 }
-
-?>

@@ -1,47 +1,48 @@
 .swat-change-order-item {
-	border-bottom: 1px solid #eee;
-	padding: 8px 12px;
+  border-bottom: 1px solid #eee;
+  padding: 8px 12px;
 }
 
 .building-block-attachment-wrapper {
-	display: inline-block;
-	text-decoration: none;
-	min-height: 48px;
-	position: relative;
+  display: inline-block;
+  text-decoration: none;
+  min-height: 48px;
+  position: relative;
 }
 
 .building-block-attachment-wrapper:after {
-	content: '';
-	display: block;
-	width: 0;
-	height: 0;
-	clear: both;
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  clear: both;
 }
 
 .building-block-attachment-icon {
-	display: block;
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 48px;
-	height: 48px;
-	background: url('../images/attachment.png') center center no-repeat transparent;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 48px;
+  height: 48px;
+  background: url('../images/attachment.png') center center no-repeat
+    transparent;
 }
 
 .building-block-attachment-title {
-	display: block;
-	float: left;
-	clear: left;
-	margin-left: 52px;
-	margin-top: 4px;
-	margin-bottom: 4px;
+  display: block;
+  float: left;
+  clear: left;
+  margin-left: 52px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .building-block-attachment-details {
-	display: block;
-	float: left;
-	clear: left;
-	margin-left: 52px;
-	font-size: 11px;
-	color: #888;
+  display: block;
+  float: left;
+  clear: left;
+  margin-left: 52px;
+  font-size: 11px;
+  color: #888;
 }

@@ -1,164 +1,111 @@
 <?php
 
 /**
- * Special view that can display any type of block
+ * Special view that can display any type of block.
  *
- * @package   Building
  * @copyright 2014-2016 silverorange
  * @license   http://www.opensource.org/licenses/mit-license.html MIT License
  */
 class BuildingBlockCompositeView extends BuildingBlockView
 {
-	// {{{ protected properties
+    /**
+     * @var array
+     */
+    protected $views = [];
 
-	/**
-	 * @var array
-	 */
-	protected $views = array();
+    // display content
 
-	// }}}
+    public function display($block)
+    {
+        if (!$block instanceof BuildingBlock) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The view %s can only display BuildingBlock objects.',
+                    get_class($this)
+                )
+            );
+        }
 
-	// display content
-	// {{{ public function display()
+        $view = $this->getViewForBlock($block);
+        $view->display($block);
+    }
 
-	public function display($block)
-	{
-		if (!$block instanceof BuildingBlock) {
-			throw new InvalidArgumentException(
-				sprintf(
-					'The view %s can only display BuildingBlock objects.',
-					get_class($this)
-				)
-			);
-		}
+    public function getViewForBlock(BuildingBlock $block)
+    {
+        return $this->getViewForType(
+            BuildingBlockViewFactory::getViewType($block)
+        );
+    }
 
-		$view = $this->getViewForBlock($block);
-		$view->display($block);
-	}
+    protected function displayContent(BuildingBlock $block) {}
 
-	// }}}
-	// {{{ public function getViewForBlock()
+    // view setters
 
-	public function getViewForBlock(BuildingBlock $block)
-	{
-		return $this->getViewForType(
-			BuildingBlockViewFactory::getViewType($block)
-		);
-	}
+    public function setAttachmentView(BuildingBlockAttachmentView $view)
+    {
+        $this->views['building-block-attachment'] = $view;
+    }
 
-	// }}}
-	// {{{ protected function displayContent()
+    public function setAudioView(BuildingBlockAudioView $view)
+    {
+        $this->views['building-block-audio'] = $view;
+    }
 
-	protected function displayContent(BuildingBlock $block)
-	{
-	}
+    public function setXHTMLView(BuildingBlockXHTMLView $view)
+    {
+        $this->views['building-block-xhtml'] = $view;
+    }
 
-	// }}}
+    public function setImageView(BuildingBlockImageView $view)
+    {
+        $this->views['building-block-image'] = $view;
+    }
 
-	// view setters
-	// {{{ public function setAttachmentView()
+    public function setVideoView(BuildingBlockVideoView $view)
+    {
+        $this->views['building-block-video'] = $view;
+    }
 
-	public function setAttachmentView(BuildingBlockAttachmentView $view)
-	{
-		$this->views['building-block-attachment'] = $view;
-	}
+    // view getters
 
-	// }}}
-	// {{{ public function setAudioView()
+    public function getAttachmentView()
+    {
+        return $this->getViewForType('building-block-attachment');
+    }
 
-	public function setAudioView(BuildingBlockAudioView $view)
-	{
-		$this->views['building-block-audio'] = $view;
-	}
+    public function getAudioView()
+    {
+        return $this->getViewForType('building-block-audio');
+    }
 
-	// }}}
-	// {{{ public function setXHTMLView()
+    public function getXHTMLView()
+    {
+        return $this->getViewForType('building-block-xhtml');
+    }
 
-	public function setXHTMLView(BuildingBlockXHTMLView $view)
-	{
-		$this->views['building-block-xhtml'] = $view;
-	}
+    public function getImageView()
+    {
+        return $this->getViewForType('building-block-image');
+    }
 
-	// }}}
-	// {{{ public function setImageView()
+    public function getVideoView()
+    {
+        return $this->getViewForType('building-block-video');
+    }
 
-	public function setImageView(BuildingBlockImageView $view)
-	{
-		$this->views['building-block-image'] = $view;
-	}
+    // helpers
 
-	// }}}
-	// {{{ public function setVideoView()
+    protected function getViewForType($type)
+    {
+        if (!isset($this->views[$type])) {
+            $this->views[$type] = $this->createCompositeViewForType($type);
+        }
 
-	public function setVideoView(BuildingBlockVideoView $view)
-	{
-		$this->views['building-block-video'] = $view;
-	}
+        return $this->views[$type];
+    }
 
-	// }}}
-
-	// view getters
-	// {{{ public function getAttachmentView()
-
-	public function getAttachmentView()
-	{
-		return $this->getViewForType('building-block-attachment');
-	}
-
-	// }}}
-	// {{{ public function getAudioView()
-
-	public function getAudioView()
-	{
-		return $this->getViewForType('building-block-audio');
-	}
-
-	// }}}
-	// {{{ public function getXHTMLView()
-
-	public function getXHTMLView()
-	{
-		return $this->getViewForType('building-block-xhtml');
-	}
-
-	// }}}
-	// {{{ public function getImageView()
-
-	public function getImageView()
-	{
-		return $this->getViewForType('building-block-image');
-	}
-
-	// }}}
-	// {{{ public function getVideoView()
-
-	public function getVideoView()
-	{
-		return $this->getViewForType('building-block-video');
-	}
-
-	// }}}
-
-	// helpers
-	// {{{ protected function getViewForType()
-
-	protected function getViewForType($type)
-	{
-		if (!isset($this->views[$type])) {
-			$this->views[$type] = $this->createCompositeViewForType($type);
-		}
-		return $this->views[$type];
-	}
-
-	// }}}
-	// {{{ protected function createCompositeViewForType()
-
-	protected function createCompositeViewForType($type)
-	{
-		return SiteViewFactory::get($this->app, $type);
-	}
-
-	// }}}
+    protected function createCompositeViewForType($type)
+    {
+        return SiteViewFactory::get($this->app, $type);
+    }
 }
-
-?>
