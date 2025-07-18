@@ -24,6 +24,7 @@ class BuildingBlockVideoEdit extends BuildingBlockEdit
             } else {
                 $media_id = $this->app->initVar('media');
                 if ($media_id === null) {
+                    /** @var SwatForm $form */
                     $form = $this->ui->getWidget('edit_form');
                     $media_id = $form->getHiddenField('media');
                 }
@@ -92,12 +93,16 @@ class BuildingBlockVideoEdit extends BuildingBlockEdit
         $media = $this->getMedia();
         $media->setFileBase('media');
 
-        $this->ui->getWidget('edit_form')->addHiddenField('media', $media->id);
+        /** @var SwatForm $form */
+        $form = $this->ui->getWidget('edit_form');
+        $form->addHiddenField('media', $media->id);
 
         $player = $media->getMediaPlayer($this->app);
         ob_start();
         $player->display();
-        $this->ui->getWidget('player')->content = ob_get_clean();
+        /** @var SwatContentBlock $ui_player */
+        $ui_player = $this->ui->getWidget('player');
+        $ui_player->content = ob_get_clean();
         $this->layout->addHtmlHeadEntrySet($player->getHtmlHeadEntrySet());
     }
 
