@@ -27,8 +27,7 @@ class BuildingBlockImageEdit extends BuildingBlockEdit
             if ($this->getObject()->image instanceof SiteImage) {
                 $this->image_set = $this->getObject()->image->image_set;
             } else {
-                $class_name = SwatDBClassMap::get('SiteImageSet');
-                $this->image_set = new $class_name();
+                $this->image_set = SwatDBClassMap::new(SiteImageSet::class);
                 $this->image_set->setDatabase($this->app->db);
                 $shortname = $this->getImageSetShortname();
                 if (!$this->image_set->loadByShortname($shortname)) {
@@ -47,8 +46,7 @@ class BuildingBlockImageEdit extends BuildingBlockEdit
 
     protected function getNewImageInstance()
     {
-        $class_name = SwatDBClassMap::get('SiteImage');
-        $image = new $class_name();
+        $image = SwatDBClassMap::new(SiteImage::class);
         $image->setDatabase($this->app->db);
         $image->image_set = $this->getImageSet();
 

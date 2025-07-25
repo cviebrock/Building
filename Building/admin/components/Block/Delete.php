@@ -38,7 +38,7 @@ class BuildingBlockDelete extends AdminDBDelete
                 'select * from Block where id in (%s)',
                 $this->getItemList('integer')
             ),
-            SwatDBClassMap::get('BuildingBlockWrapper')
+            SwatDBClassMap::get(BuildingBlockWrapper::class)
         );
 
         $view = SiteViewFactory::get($this->app, 'building-block');

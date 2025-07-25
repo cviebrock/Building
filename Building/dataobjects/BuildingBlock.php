@@ -5,6 +5,10 @@
  *
  * @copyright 2014-2016 silverorange
  * @license   http://www.opensource.org/licenses/mit-license.html MIT License
+ *
+ * @property ?SiteAttachment $attachment
+ * @property ?SiteImage      $image
+ * @property ?SiteVideoMedia $media
  */
 class BuildingBlock extends SwatDBDataObject
 {
@@ -14,7 +18,7 @@ class BuildingBlock extends SwatDBDataObject
     public $id;
 
     /**
-     * @var string
+     * @var ?string
      */
     public $bodytext;
 
@@ -44,17 +48,17 @@ class BuildingBlock extends SwatDBDataObject
 
         $this->registerInternalProperty(
             'attachment',
-            SwatDBClassMap::get('SiteAttachment')
+            SwatDBClassMap::get(SiteAttachment::class)
         );
 
         $this->registerInternalProperty(
             'image',
-            SwatDBClassMap::get('SiteImage')
+            SwatDBClassMap::get(SiteImage::class)
         );
 
         $this->registerInternalProperty(
             'media',
-            SwatDBClassMap::get('SiteVideoMedia')
+            SwatDBClassMap::get(SiteVideoMedia::class)
         );
 
         $this->id_field = 'integer:id';

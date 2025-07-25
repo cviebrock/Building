@@ -36,18 +36,19 @@ class BuildingBlockViewFactory
      */
     public static function getViewType(BuildingBlock $block)
     {
-        $type = 'building-block-xhtml';
-
         if ($block->media instanceof SiteAudioMedia) {
-            $type = 'building-block-audio';
-        } elseif ($block->media instanceof SiteVideoMedia) {
-            $type = 'building-block-video';
-        } elseif ($block->image instanceof SiteImage) {
-            $type = 'building-block-image';
-        } elseif ($block->attachment instanceof SiteAttachment) {
-            $type = 'building-block-attachment';
+            return 'building-block-audio';
+        }
+        if ($block->media instanceof SiteVideoMedia) {
+            return 'building-block-video';
+        }
+        if ($block->image instanceof SiteImage) {
+            return 'building-block-image';
+        }
+        if ($block->attachment instanceof SiteAttachment) {
+            return 'building-block-attachment';
         }
 
-        return $type;
+        return 'building-block-xhtml';
     }
 }

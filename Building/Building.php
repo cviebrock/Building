@@ -102,31 +102,31 @@ class Building
         SiteViewFactory::addPath('Building/views');
         SiteViewFactory::registerView(
             'building-block-audio',
-            'BuildingBlockAudioView'
+            BuildingBlockAudioView::class
         );
         SiteViewFactory::registerView(
             'building-block-video',
-            'BuildingBlockVideoView'
+            BuildingBlockVideoView::class
         );
         SiteViewFactory::registerView(
             'building-block-image',
-            'BuildingBlockImageView'
+            BuildingBlockImageView::class
         );
         SiteViewFactory::registerView(
             'building-block-xhtml',
-            'BuildingBlockXHTMLView'
+            BuildingBlockXHTMLView::class
         );
         SiteViewFactory::registerView(
             'building-block-attachment',
-            'BuildingBlockAttachmentView'
+            BuildingBlockAttachmentView::class
         );
         SiteViewFactory::registerView(
             'building-block',
-            'BuildingBlockCompositeView'
+            BuildingBlockCompositeView::class
         );
         SiteViewFactory::registerView(
             'building-block-admin',
-            'BuildingBlockAdminCompositeView'
+            BuildingBlockAdminCompositeView::class
         );
 
         SwatUI::mapClassPrefixToPath('Building', 'Building');
