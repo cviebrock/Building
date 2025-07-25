@@ -6,11 +6,6 @@
  * @copyright 2014-2016 silverorange
  * @license   http://www.opensource.org/licenses/mit-license.html MIT License
  *
- * @property int             $id
- * @property ?string         $bodytext
- * @property ?int            $displayorder
- * @property ?SwatDate       $createdate
- * @property ?SwatDate       $modified_date
  * @property ?SiteAttachment $attachment
  * @property ?SiteImage      $image
  * @property ?SiteVideoMedia $media
@@ -23,7 +18,7 @@ class BuildingBlock extends SwatDBDataObject
     public $id;
 
     /**
-     * @var string
+     * @var ?string
      */
     public $bodytext;
 
