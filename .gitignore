@@ -17,3 +17,4 @@ composer.lock
 
 # overrides for local tooling
 /phpstan.neon
+/phpstan-baseline.neon
