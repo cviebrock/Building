@@ -25,8 +25,8 @@ class BuildingBlockAttachmentEdit extends BuildingBlockEdit
     {
         if (!$this->attachment_set instanceof SiteAttachmentSet) {
             if ($this->getObject()->attachment instanceof SiteAttachment) {
-                $this->attachment_set =
-                    $this->getObject()->attachment->attachment_set;
+                $this->attachment_set
+                    = $this->getObject()->attachment->attachment_set;
             } else {
                 $this->attachment_set = SwatDBClassMap::new(SiteAttachmentSet::class);
                 $this->attachment_set->setDatabase($this->app->db);
