@@ -1,26 +1,26 @@
-<?xml version="1.0" standalone="no"?>
+<?xml version="1.0" standalone="no" ?>
 <!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
 <swatml>
-	<widget class="SwatMessageDisplay" id="message_display" />
-	<widget class="SwatFrame" id="edit_frame">
-		<property name="title" translatable="yes">Video</property>
-		<widget class="SwatForm" id="edit_form">
-			<widget class="SwatContentBlock" id="player">
-				<property name="content_type">text/xml</property>
-			</widget>
-			<widget class="SwatFormField">
-				<property name="title" translatable="yes">Caption</property>
-				<widget class="SwatEntry" id="title">
-					<property name="maxlength" type="integer">255</property>
-				</widget>
-			</widget>
-			<widget class="SwatFormField">
-				<property name="title" translatable="yes">Description</property>
-				<widget class="SwatTextarea" id="description" />
-			</widget>
-			<widget class="SwatFooterFormField">
-				<widget class="SwatButton" id="submit_button" />
-			</widget>
-		</widget>
-	</widget>
+    <widget class="SwatMessageDisplay" id="message_display" />
+    <widget class="SwatFrame" id="edit_frame">
+        <property name="title" translatable="yes">Video</property>
+        <widget class="SwatForm" id="edit_form">
+            <widget class="SwatContentBlock" id="player">
+                <property name="content_type">text/xml</property>
+            </widget>
+            <widget class="SwatFormField">
+                <property name="title" translatable="yes">Caption</property>
+                <widget class="SwatEntry" id="title">
+                    <property name="maxlength" type="integer">255</property>
+                </widget>
+            </widget>
+            <widget class="SwatFormField">
+                <property name="title" translatable="yes">Description</property>
+                <widget class="SwatTextarea" id="description" />
+            </widget>
+            <widget class="SwatFooterFormField">
+                <widget class="SwatButton" id="submit_button" />
+            </widget>
+        </widget>
+    </widget>
 </swatml>
